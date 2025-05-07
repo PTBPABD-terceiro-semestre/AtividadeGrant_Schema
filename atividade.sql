@@ -31,4 +31,15 @@ grant select, alter on time_slot to User_A with grant option;
 Questão 03. Liste as permissões do User_A.
 */
 
-select ;
+select  princ.name
+,       princ.type_desc
+,       perm.permission_name
+,       perm.state_desc
+,       perm.class_desc
+,       object_name(perm.major_id)
+from    sys.database_principals princ
+left join
+        sys.database_permissions perm
+on      perm.grantee_principal_id = princ.principal_id
+where princ.type_desc = 'SQL_USER' and princ.name = 'User_A' 
+order by princ.name;
